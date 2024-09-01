@@ -1,4 +1,4 @@
 {
-  "ScriptOutPath": "G:\\myProject\\WonTableConverter\\WonTableConverter\\ConvertScript",
-  "XcelReadPath": "/DataFolder/"
+  "ScriptOutPath": "ExcelData\\",
+  "XcelReadPath": "ConvertFolder\\"
 }

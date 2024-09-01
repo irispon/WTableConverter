@@ -4,15 +4,17 @@ using System;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Diagnostics;
 public class MainProgram
 {
 
    public static Dictionary<string/*Sheet*/, Dictionary<string/*enumstring*/, int/*value*/>> enumDictionary = null;
     static void Main(string[] args)
     {
+
         enumDictionary = new Dictionary<string, Dictionary<string, int>>();
-        string defaultExcelFilePath = "G:\\myProject\\WTableConverter\\WonTableConverter\\";
-        string defaultScriptOutPath = "G:\\myProject\\WTableConverter\\WonTableConverter\\ConvertScript\\";
+        string defaultExcelFilePath = Path.Combine(Directory.GetCurrentDirectory(), "ExcelData\\");
+        string defaultScriptOutPath = Path.Combine(Directory.GetCurrentDirectory(), "ConvertFolder\\");
 
         string appSettingsFilePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
 
@@ -42,17 +44,19 @@ public class MainProgram
             .Build();
 
         // 환경 설정에서 경로 읽기
-        string excelFilePath = configuration["Paths:ExcelFilePath"]!;
-        string scriptOutPath = configuration["Paths:ScriptOutPath"]!;
+        string excelFilePath = Path.Combine(Directory.GetCurrentDirectory(), configuration["Paths:ExcelFilePath"]!);
+        string scriptOutPath = Path.Combine(Directory.GetCurrentDirectory(), configuration["Paths:ScriptOutPath"]!); 
         string dataOutPath = scriptOutPath + "\\TableDatas\\";
         // 출력 폴더가 존재하지 않으면 생성합니다.
         if (!Directory.Exists(scriptOutPath))
         {
             Directory.CreateDirectory(scriptOutPath);
+            Console.WriteLine($"{scriptOutPath} 폴더가 존재하지 않습니다.");
         }
         if (!Directory.Exists(dataOutPath))
         {
             Directory.CreateDirectory(dataOutPath);
+            Console.WriteLine($"{dataOutPath} 폴더가 존재하지 않습니다.");
         }
         // 스크립트 클래스 생성
         var excelFiles = Directory.GetFiles(excelFilePath, "*.xlsx");
@@ -60,6 +64,11 @@ public class MainProgram
 
         if (Directory.Exists(excelFilePath))
         {
+            if (excelFiles.Length < 1)
+            {
+                Console.WriteLine($"Excel file 이 존재하지 않습니다.");
+                return;
+            }
             List<string> _tmpFiles = new List<string>();
             try
             {
@@ -118,7 +127,7 @@ public class MainProgram
 
 
         Console.WriteLine($"스크립트 및 JSON 데이터가 성공적으로 생성되었습니다: {scriptOutputFilePath}, {scriptOutPath}");
-
+        Console.ReadLine();
 
 
     }
