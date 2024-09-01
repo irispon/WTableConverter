@@ -17,6 +17,11 @@ namespace WonTableConverter
             {
                 foreach (var worksheet in workbook.Worksheets)
                 {
+                    if (worksheet.Name.Contains("_sub", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //[W] 서브 테이블인 경우는 스크립트를 생성하지 않음.
+                        continue;
+                    }
                     // 클래스 이름으로 시트 이름 사용
                     string className = worksheet.Name;
                     scriptCodeBuilder.AppendLine($"public class {className}");
@@ -150,6 +155,13 @@ namespace WonTableConverter
             {
                 foreach (var worksheet in workbook.Worksheets)
                 {
+
+                    if (worksheet.Name.Contains("_sub", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //[W] 서브 테이블인 경우는 스크립트를 생성하지 않음.
+                        continue;
+                    }
+
                     var usedCells = worksheet.Row(1).CellsUsed().ToList(); // 첫 번째 행의 사용된 셀들
 
                     // 시트명과 대응되는 Dictionary 생성

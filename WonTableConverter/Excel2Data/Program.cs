@@ -5,6 +5,7 @@ using System.Text;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Diagnostics;
 using WonTableConverter.Excel2Data;
+using WonTableConverter;
 public class MainProgram
 {
 
@@ -102,6 +103,11 @@ public class MainProgram
                     // XML 데이터 생성
                     ExcelToXmlConverter.ConvertExcelToXml(excelFile, dataOutPath);
 
+                }
+
+                foreach (var excelFile in _tmpFiles)
+                {
+                    ExcelToXmlConverter.ConvertSubExcelToXml(excelFile, dataOutPath);
                 }
             }
             finally
