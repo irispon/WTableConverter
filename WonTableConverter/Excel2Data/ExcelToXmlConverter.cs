@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace WonTableConverter
+namespace WonTableConverter.Excel2Data
 {
     class ExcelToXmlConverter
     {
@@ -69,7 +69,7 @@ namespace WonTableConverter
                             if (variableValue.Contains("enum", StringComparison.OrdinalIgnoreCase))
                             {
                                 string? cellName = worksheet.Row(3).Cell(i + 1).GetValue<string>();
-                                if (string.IsNullOrEmpty(cellName) ==true)
+                                if (string.IsNullOrEmpty(cellName) == true)
                                 {
                                     cellName = worksheet.Name;
                                 }

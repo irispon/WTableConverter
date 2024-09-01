@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ConvertScript\" />
+    <Reference Include="WShareInterfaces">
+      <HintPath>WShareInterfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
